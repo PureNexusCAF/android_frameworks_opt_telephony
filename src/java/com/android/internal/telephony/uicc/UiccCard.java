@@ -88,6 +88,7 @@ public class UiccCard {
     private CatService mCatService;
     private RadioState mLastRadioState =  RadioState.RADIO_UNAVAILABLE;
     private UiccCarrierPrivilegeRules mCarrierPrivilegeRules;
+    private UICCConfig mUICCConfig = null;
 
     private RegistrantList mAbsentRegistrants = new RegistrantList();
     private RegistrantList mCarrierPrivilegeRegistrants = new RegistrantList();
@@ -132,6 +133,7 @@ public class UiccCard {
             mCatService = null;
             mUiccApplications = null;
             mCarrierPrivilegeRules = null;
+            mUICCConfig = null;
         }
     }
 
@@ -147,6 +149,8 @@ public class UiccCard {
             mCi = ci;
 
             //update applications
+            if (mUICCConfig == null)
+                mUICCConfig = new UICCConfig();
             if (DBG) log(ics.mApplications.length + " applications");
             for ( int i = 0; i < mUiccApplications.length; i++) {
                 if (mUiccApplications[i] == null) {
@@ -660,6 +664,10 @@ public class UiccCard {
             }
         }
         return null;
+    }
+
+    public UICCConfig getUICCConfig() {
+        return mUICCConfig;
     }
 
     private void log(String msg) {
